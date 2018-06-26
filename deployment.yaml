@@ -12,7 +12,7 @@ data:
   config: |-
     {
       "cleanup.policy": "compact",
-      "min.cleanable.dirty.ratio": "0.0"
+      "min.cleanable.dirty.ratio": "0.0",
       "segment.bytes": "1048576"
     }
 ---
@@ -35,7 +35,7 @@ spec:
         env:
           - name: KAFKA_BOOTSTRAP_SERVER
             value: my-cluster-kafka:9092
-          - name: KAFKA-TOPIC
+          - name: KAFKA_TOPIC
             value: address-book
           - name: KAFKA_GROUP_ID
             valueFrom:
