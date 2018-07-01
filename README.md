@@ -16,7 +16,7 @@ It is configured using environment variables:
 
 The application has a simple UI for managing the addresses.
 To open the UI, go to your browser and open [http://localhost:8080/](http://localhost:8080/) or the address where it is running.
-The UI is based on []this blog post](http://www.baeldung.com/angular-js-rest-api). 
+The UI is based on [this blog post](http://www.baeldung.com/angular-js-rest-api). 
 
 ## REST interface
 
