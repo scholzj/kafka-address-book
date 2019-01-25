@@ -12,6 +12,40 @@ spec:
     min.cleanable.dirty.ratio: 0.0
     segment.bytes: 10485760
 ---
+apiVersion: kafka.strimzi.io/v1alpha1
+kind: KafkaUser
+metadata:
+  name: address-book
+  labels:
+    strimzi.io/cluster: my-cluster
+spec:
+  authentication:
+    type: tls
+  authorization:
+    type: simple
+    acls:
+    - resource:
+        type: topic
+        name: address-book
+      operation: Write
+    - resource:
+        type: topic
+        name: address-book
+      operation: Create
+    - resource:
+        type: topic
+        name: address-book
+      operation: Describe
+    - resource:
+        type: topic
+        name: address-book
+      operation: Read
+    - resource:
+        type: group
+        name: address-book
+        patternType: prefix
+      operation: Read
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -28,6 +62,22 @@ spec:
       containers:
       - name: address-book
         image: scholzj/kafka-address-book:latest
+        env:
+        - name: CA_CRT
+          valueFrom:
+            secretKeyRef:
+              name: my-cluster-cluster-ca-cert
+              key: ca.crt
+        - name: USER_CRT
+          valueFrom:
+            secretKeyRef:
+              name: address-book
+              key: user.crt
+        - name: USER_KEY
+          valueFrom:
+            secretKeyRef:
+              name: address-book
+              key: user.key
         - name: KAFKA_BOOTSTRAP_SERVER
           value: my-cluster-kafka-bootstrap:9093
         - name: KAFKA_TOPIC
